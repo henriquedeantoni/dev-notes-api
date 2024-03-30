@@ -40,6 +40,12 @@ class TaskController {
     })
     return response.json(task)
   }
+
+  async index(request, response) {
+    const tasks = await Task.findAll()
+
+    return response.json(tasks)
+  }
 }
 
 export default new TaskController()
