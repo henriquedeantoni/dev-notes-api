@@ -4,8 +4,9 @@ import User from '../app/models/User'
 
 import configDataBase from '../config/database'
 import Task from '../app/models/Task'
+import Reminder from '../app/models/Reminder'
 
-const models = [User, Task]
+const models = [User, Task, Reminder]
 
 class Database {
   constructor() {
@@ -15,6 +16,9 @@ class Database {
   init() {
     this.connection = new Sequelize(configDataBase)
     models.map((model) => model.init(this.connection))
+    models.map(
+      (model) => model.associate && model.associate(this.connection.models),
+    )
   }
 }
 

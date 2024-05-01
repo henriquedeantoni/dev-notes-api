@@ -2,41 +2,27 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Tasks', {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('Reminders', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      name_task: {
+      name_reminder: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: false,
       },
-      date_begin: {
+      date_reminder: {
         type: Sequelize.DATE,
         allowNull: true,
       },
-      date_finish: {
-        type: Sequelize.DATE,
-        allowNull: true,
-      },
-      frequency: {
+      message: {
         type: Sequelize.STRING,
-        allowNull: true,
-      },
-      description: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      box_color: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      text_color: {
-        type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
+        unique: false,
       },
       user_id: {
         type: Sequelize.UUID,
@@ -56,7 +42,7 @@ module.exports = {
     })
   },
 
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Tasks')
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('Reminders')
   },
 }

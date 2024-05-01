@@ -1,3 +1,3 @@
-import app from "./app";
+import app from './app'
 // porta 3000
-app.listen(3000);
+app.listen(3001)
