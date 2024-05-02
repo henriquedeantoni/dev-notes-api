@@ -41,13 +41,26 @@ class UserController {
     // Verifica se o usuário é administrador
     const adminUser = await User.findByPk(request.userId)
 
+    console.log('mostra abaixo')
+    console.log(request.userId)
+
+    if (!adminUser) {
+      console.log('No user found with ID:', request.userId)
+      return response.status(404).json({ error: 'User not found' })
+    }
+
+    /* if (!adminUser.admin) {
+      console.log('User is not an admin:', adminUser)
+      return response.status(403).json({ error: 'Access denied' })
+    } */
+
     if (!adminUser || !adminUser.admin) {
       return response.status(403).json({ error: 'Access denied' })
     }
 
     const schema = Yup.object().shape({
       name: Yup.string(),
-      password: Yup.string().min(6),
+      email: Yup.string().email(),
     })
 
     try {
@@ -56,20 +69,25 @@ class UserController {
       return response.status(400).json({ error: err.errors })
     }
 
-    const { name, password } = request.body
-    const { userId } = request.params // Supondo que o ID do usuário a ser atualizado vem na URL
+    const { name, email } = request.body
+    const { id } = request.params // Supondo que o ID do usuário a ser atualizado vem na URL
 
     try {
-      const user = await User.findByPk(userId)
+      const user = await User.findByPk(id)
       if (!user) {
+        console.log('erro ta aqui')
         return response.status(404).json({ error: 'User not found' })
       }
 
       if (name) {
         user.name = name
       }
-      if (password) {
-        user.password = password // Lembre-se de aplicar hash na senha antes de salvar
+      if (email && email !== user.email) {
+        const emailExists = await User.findOne({ where: { email } })
+        if (emailExists) {
+          return response.status(400).json({ error: 'Email already in use' })
+        }
+        user.email = email
       }
 
       await user.save()
