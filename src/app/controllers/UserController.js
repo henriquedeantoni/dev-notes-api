@@ -75,7 +75,6 @@ class UserController {
     try {
       const user = await User.findByPk(id)
       if (!user) {
-        console.log('erro ta aqui')
         return response.status(404).json({ error: 'User not found' })
       }
 

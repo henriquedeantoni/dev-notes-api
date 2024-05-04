@@ -112,6 +112,29 @@ class TaskController {
     return response.json(tasks)
   }
 
+  async delete(request, response) {
+    const { id } = request.params // Obtém o ID da tarefa a ser excluída
+    const { user_id: userIdFromRequest } = request.body // Obtém o user_id da requisição
+
+    // Busca a tarefa no banco de dados
+    const task = await Task.findByPk(id)
+    if (!task) {
+      return response.status(404).json({ error: 'Task not found' })
+    }
+
+    // Verifica se o user_id da tarefa corresponde ao user_id da requisição
+    if (task.user_id !== userIdFromRequest) {
+      return response.status(403).json({
+        error: 'Unauthorized: You are not allowed to delete this task',
+      })
+    }
+
+    // Se tudo estiver correto, deleta a tarefa
+    await task.destroy()
+
+    return response.status(204).send() // Retorna uma resposta vazia com status 204 (No Content)
+  }
+
   /*
   async index(request, response) {
     const tasks = await Task.findAll()
