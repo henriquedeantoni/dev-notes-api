@@ -1,5 +1,6 @@
 import './database'
 
+import cors from 'cors'
 import express from 'express'
 import routes from './routes'
 
@@ -13,6 +14,11 @@ class App {
 
   middlewares() {
     this.app.use(express.json())
+    this.app.use(
+      cors({
+        origin: 'http://localhost:5173', // Só permite requisições deste origin
+      }),
+    )
   }
 
   routes() {
