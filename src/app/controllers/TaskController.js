@@ -102,11 +102,13 @@ class TaskController {
   }
 
   async index(request, response) {
-    const { user_id } = request.body // Assuming user_id is sent in the request body
+    const { userId } = request // Assuming user_id is sent in the request body
+
+    // console.log('userId: ' + userId)//log de verificação
 
     const tasks = await Task.findAll({
       where: {
-        user_id,
+        user_id: userId,
       },
     })
     return response.json(tasks)
