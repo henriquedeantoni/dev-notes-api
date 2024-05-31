@@ -2,6 +2,7 @@ import Sequelize from 'sequelize'
 
 import User from '../app/models/User'
 
+// import configDataBase from '../config/database'
 import Task from '../app/models/Task'
 import Reminder from '../app/models/Reminder'
 

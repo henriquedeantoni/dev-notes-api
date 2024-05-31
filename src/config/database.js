@@ -1,9 +1,6 @@
 module.exports = {
   dialect: 'postgres',
-  host: 'localhost',
-  username: 'postgres',
-  password: 'postgres',
-  database: 'devnotes',
+  url: 'postgresql://postgres:wVtWnkGeIkNjHEvXILlfZuOiIYmkmxxH@monorail.proxy.rlwy.net:16469/railway',
   define: {
     timespamps: true,
     underscore: true,
