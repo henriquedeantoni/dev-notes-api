@@ -9,6 +9,10 @@ import authMiddleware from './app/middlewares/auth'
 
 const routes = new Router()
 
+routes.get('/', (req, res) => {
+  return res.json({ message: 'DEV-NOTES-API' })
+})
+
 routes.post('/users', UserController.store)
 
 routes.post('/sessions', SessionController.store)
